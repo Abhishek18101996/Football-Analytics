@@ -30,80 +30,62 @@ The enriched_events_data DataFrame applies to_metric_centered_coordinates on the
 build_language_models(): This function is responsible for building all models of Football2Vec, including Action2Vec and Player2Vec. It then exports the resulting artifacts for use by the package.
 
 ### Run configurations
-There are some very basic configurations for each run, available to modify directly on `main.py`:
-- `force_create = False`: Whether to force override all artifacts without trying load existing artifacts.
-- `verbose = False` for Prints control.
-- `plotly_export = False`: Whether to export <a href="http://plotly.com">Plotly</a> figures to <a href="https://chart-studio.plotly.com"> Plotly studio</a>. 
-- `save_artifacts = False`: Whether to save the artifacts in to `params.PATHS.ARTIFACTS`. 
-    - Pay attention that this is False by default, meaning NO ARTIFACTS WILL BE SAVED.
+The main.py file provides a few fundamental configurations that can be modified to suit your needs. These configurations are as follows:
 
-### Additional configurable parameters
-params.py:
-- `CONSTANTS.VOCABULARY` - holds all events types that will be considered by the language models.
-- `CONSTANTS.HARD_XG` & `CONSTANTS.EASY_XG` - define the 'easy' and 'hard' probabilities thresholds for skill evaluation and the UI.
-
-### Running times
-Total run time: 106 minutes
-- Total run time for `build_data_objects()`: 76 minutes
-- Total run time for `build_language_models()`: 30 minutes<br>
-
-With much older MacBook Pro (Retina, 15-inch, Late 2013):
-- Machine processor i386
-Total run time: 437 minutes
-Total run time for build_data_objects: 108 minutes
-Total run time for build_language_models: 329 minutes
+force_create = False: This determines whether or not to override existing artifacts when running the program.
+verbose = False: This determines whether or not to enable print statements for additional information during runtime.
+plotly_export = False: This determines whether or not to export any Plotly figures to Plotly Studio.
+save_artifacts = False: This determines whether or not to save the artifacts in the designated params.PATHS.ARTIFACTS directory.
+Please note that the save_artifacts parameter is set to False by default, which means that no artifacts will be saved unless you explicitly change this configuration.
 
 ## Running the Streamlit UI
 To run the Streamlit UI, open a terminal/cmd window in the project directory and run:
 <br>`streamlit run player_app.py`.
 
 <br>
-This will open a localhost on a browser. More on deploying Streamlit apps can be found <a href="https://docs.streamlit.io/en/stable/deploy_streamlit_app.html">here</a>.
+This will open a localhost on a browser.
 <br>
-Since the UI consumes all artifacts above, or creating them on the fly, it is highly recommended to either to download 
-the pre-trained models or to run `main.py` before running the UI. When doing so, verify that `save_artifacts` is set to `True`.
-The UI is a Streamlit dashboard which presents skill evaluation and representation of the selected player in the UI.<br>
-During the first run (or any run, if `save_artifacts` is disabled) the app will create `players_metrics_by_seasons.csv` with the sie of 142KB.
-- It is recommended to run step 1, 2 before building the UI, so the UI won't build all data objects and models on the fly.
-- For best performance, enable save_artifacts in (see 'Run' section above). Streamlit will be able to load the data into its cache, allowing seamless experience.  
+To ensure optimal performance when using the UI, it is strongly recommended that you either download the pre-trained models or run main.py beforehand. If you choose to run main.py, it is important to set save_artifacts to True to ensure that all necessary artifacts are saved. The UI itself is a Streamlit dashboard that provides skill evaluation and player representation features.
+
+If you choose to run main.py before launching the UI, it is recommended that you complete steps 1 and 2 beforehand. This will prevent the UI from having to build all of the data objects and models on the fly. Additionally, enabling save_artifacts will allow Streamlit to load the necessary data into its cache, resulting in a seamless user experience.
+
+Finally, it is worth noting that during the initial run (or any subsequent run with save_artifacts disabled), the app will create a players_metrics_by_seasons.csv file with a size of 142KB. 
 
 ### UI components
 It is a simple Streamlit app with the following features:
-1. Information section: Sidebar for team & player selection, the player image and player metadata.
+1. The information section of the UI contains a sidebar where the user can select a team and a player. Once a player is selected, the sidebar displays the player's image and metadata such as their name, position, nationality, and date of birth. This information provides context for the user and helps them make informed decisions about which player to evaluate or represent.
 <img src="https://cdn-images-1.medium.com/max/1600/1*IHUjltY_GltSnoPCZpTyqQ.png" alt="information section"><br><br>
 
 2. Player skill analysis section: 
     - Analysis' parameters control panel.
     <img src="https://cdn-images-1.medium.com/max/1600/1*1-ecjk80BW0LqcZFXTPIHg.png"><br>
-    - Skills radar chart with baselines
-    - Badges - each shot type has a unique icon for players with a Lift value greater than the threshold [=1.1].
+    The interface features a skills radar chart that displays a player's performance across multiple skills, along with baselines for comparison. Additionally, badges are awarded to players whose Lift value for each shot type exceeds the threshold of 1.1. The interface also includes a sidebar for team and player selection, as well as a player image and metadata.
     <img src="https://cdn-images-1.medium.com/max/1600/1*wv3LQrePZVKBRyDG-2FJsA.png">
    
 3. Player evolution section (collapsable container)
-<br>Analyzing the player's skills and performance over seasons. Contain two Plotly animated charts:<br>
-    - Animation of player's skills radar charts over seasons (see `plot.py > player_evolution`), with integrated controls.<br>
+<br>An analysis of the player's skills and performance over seasons is provided, which includes two Plotly animated charts. The first chart depicts the animation of the player's skills radar charts over seasons using the plot.py library's player_evolution function. This chart is equipped with integrated controls to provide an interactive experience.<br>
     <img src="https://cdn-images-1.medium.com/max/1600/1*FtCFSdY59ckv8wTb-0yN5Q.png"><br>
     
-    - Animated actions heatmaps over seasons (see `plot.py > player_actions_heatmap_evolution`), with integrated controls. It describes the frequency and location of actions over seasons.
+    This feature in the UI generates an animated heatmap that displays the frequency and location of a player's actions over multiple seasons. The heatmap is created using Plotly and can be accessed through the plot.py module's player_actions_heatmap_evolution function. The animation is interactive and comes with integrated controls, allowing users to toggle between seasons and view the player's actions over time.
     <img src="https://cdn-images-1.medium.com/max/1600/1*Po8zvZ4tya4xxR-hOxWwAA.png"><br><br>
  
 4. xG evaluation (collapsable container)<br>
-<br>The xG evaluation section presents two charts:
-    - Shot conversions distribution plot (on top)- Plots the xG conversion for a single-player.
-    - xG Lift by body part - analyzes the players' head and legs performance. 
+<br>The xG evaluation section presents two insightful charts that provide an in-depth analysis of the player's performance based on expected goals (xG).
+
+The first chart is a shot conversions distribution plot that displays the player's xG conversion rate. This plot illustrates how often a player is expected to score based on the quality of the shots they take, and how often they actually score. By analyzing this chart, it is possible to evaluate the player's finishing ability and their effectiveness in converting scoring opportunities.
+
+The second chart is called xG Lift by body part. This chart analyzes the player's performance based on their body part used to take the shot, such as their head or legs. By comparing a player's xG value to the average xG value for each body part, it is possible to see how much better or worse the player is at taking shots with specific body parts. This analysis provides valuable insights into a player's strengths and weaknesses and can help coaches and analysts identify areas for improvement. 
 <img src="https://cdn-images-1.medium.com/max/1600/1*zjMxegpvNVCzp4c4FDIDcg.png"><br>
 5. Player2Vec embeddings section<br>
-This section holds all insights origin from the language models listed below.
-    - Player2Vec UMAP embeddings plot with coloring and presentation configurations.
-    - Most similar players to the selected player, by cosine similarity, as well as by euclidean distance.
+We leverage the power of the Player2Vec language model to gain valuable insights into a player's performance. We begin by visualizing the player's UMAP embeddings using Plotly, allowing us to explore patterns and clusters within the data. Additionally, we identify the most similar players to the selected player based on cosine similarity and euclidean distance metrics, providing a comprehensive understanding of how the player compares to others in the league. These insights are invaluable for identifying strengths and weaknesses, and ultimately improving overall performance.
 <img src="https://cdn-images-1.medium.com/max/1600/1*0_-lyiPn2kC0ofCm7ymRUQ.png">
 
 
 ## Language models
 ### Action2Vec
 A <a href="https://radimrehurek.com/gensim/models/word2vec.html">Gensim Word2Vec</a> model which allows embedding the semantics of the football language in a 32-dimensional space. 
-<br>
-Read more: <a href="https://towardsdatascience.com/embedding-the-language-of-football-using-nlp-e52dc153afa6">Embedding the Language of Football Using NLP</a>.
+<br>The model utilizes an advanced approach to capture and encode the semantics of the football language, resulting in a 32-dimensional embedding space.
+
 <img src="https://miro.medium.com/max/2000/0*OCSd2lLUVJV22-NA">
 <em>UMAP projections of the complete 19K words Action2Vec vocabulary.</em>
 
