@@ -1,56 +1,33 @@
-# Football2Vec
-<img alt="open-source" src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103">
+# Football Analytics
+
 <img alt="Football2Vec" src="https://pbs.twimg.com/profile_banners/57356687/1630479357">
 
-This football analytics package is based on a series of <a href="https://medium.com/@ofirmagdaci">Towards Data Science articles</a> by <a href="www.magdaci.com">Ofir Magdaci:</a>
-1. <a href="https://towardsdatascience.com/embedding-the-language-of-football-using-nlp-e52dc153afa6">Embedding the Language of Football Using NLP</a> 
-2. <a href="https://towardsdatascience.com/a-deep-dive-into-the-language-of-football-2a2984b6bd21?">A Deep Dive into the Language of Football</a>
-3. <a href="https://towardsdatascience.com/data-driven-evaluation-of-football-players-skills-c1df36d61a4e">Data-Driven Evaluation of Football Players' Skills</a>
 
-Using this package, you can to download pre-trained models or run and create your own.
-
-## Installation
+## Pre-Requisites
 ### Anaconda environment
-The package contains easy-to-use config file to quickly set up an <a href="https://www.anaconda.com/">anaconda</a> environment for the project. Alternatively, you can manually install the list of packages listed in the file. 
-To create a conda environment with all required dependencies (see `conda_env.yml`), open a terminal/cmd window and `cd` to project repository and run:<br>
-`conda env create -f conda_env.yml`. 
 
 ### Dataset
-The StatsBomb open dataset is a free data available for research. You can download and read more about it <a href="https://github.com/statsbomb/open-data">here.</a>
-Save the extracted 'statsbomb' directory into `<package_path>/data`, without modify its name.
+The StatsBomb open dataset represents an invaluable resource for researchers seeking to explore the complexities of contemporary football. This freely available data offers a comprehensive overview of key performance indicators and enables users to engage in sophisticated data analysis to gain deeper insights into player and team performance. Interested parties are encouraged to visit the official GitHub repository for more information, where they can download the dataset and begin exploring its vast potential.
+
+To ensure seamless integration with other data sources, it is recommended that the extracted 'statsbomb' directory be saved in <package_path>/data without any modifications to its original name. This will enable users to capitalize on the full range of features and functionalities offered by the StatsBomb open dataset and unlock new avenues for exploration and discovery.
 
 ### Pre-trained package: 
-For using the UI, you must first create all necessary artifacts: data objects and trained models. To this end, run `main.py` 
-manually (see under 'Manual Run'). Alternatively, pre-trained models are available to download (see below). <br>
-Data objects currently are not available for download due to licensing.<br>
+In order to effectively utilize the UI, it is imperative that users first create all necessary artifacts, including data objects and trained models. To accomplish this, simply run the main.py script manually, as detailed in the 'Manual Run' section.
 
-#### Download the pre-trained package
-You can get a pre-made models by downloading the <a href="https://www.magdaci.com/football2vec-pretrained">pre-trained package</a>. Extract it and put the `models_artifacts` folder into football2vec/artifacts directory.
-This package includes all pre-trained models.<br>
-Due to StatsBomb licensing, I can't offer pre-made data processing artifacts (see 'build_data_objects' under 'Manual Run').
+Alternatively, users may choose to take advantage of pre-trained models that are available for download. Please refer to the information below for additional guidance on accessing these resources.
 
-#### The pre-trained models
-The open-source models of Football2Vec are more basic
-<a href="https://towardsdatascience.com/embedding-the-language-of-football-using-nlp-e52dc153afa6">than presented in the article</a>. 
-However, they are can be easily and freely extended.<br> 
-- The pre-trained version uses merely the action position and type for building to tokens.  
-- For extending word string representation, see 'extending the model' below.
+It is important to note that at present, data objects are not available for download due to licensing considerations. We appreciate your understanding and look forward to exploring additional avenues for making these resources available in the future.
+
  
 ## Manual Run
-For a manual run, simply executes `main.py` via any Python supported software you have or directly using the terminal. 
-For terminal installation, open a terminal/cmd window, `cd` to the project directory and run `python main.py`.
-The package has two main processes:
-1. `build_data_objects()` - The function builds all data-objects required for the models and the UI:
-    - enriched_events_data: Builds enriched events_data DataFrame. It apply to_metric_centered_coordinates on the data, and adds shots types, etc.
-    - matches_metadata: Adds season_name, competition_name, etc., for each match in the dataset.
-    - teams_metadata: Adds columns such as nation, stadium, gender, etc., for each team in the dataset.
-    - players_metadata: Combines players metadata given in the dataset and enriches it with events_data information:
-        Adds player_name, team_name, and position_name per player (take most frequent).
-    - players_metrics_df: Builds a DataFrame of stats for players - xG, xA, lifts for each shot type, etc.
-    - baselines.pickle: Build a dictionary {baselines_dimension: df} where the df is identical to players_metrics_df, 
-    with baselines names instead of players. For example, the leagues baselines has a DataFrame, 
-    where each line corresponds to the average stats of players in this league.   
-2. `build_language_models()` - The function builds all models of Football2Vec: Action2Vec and Player2Vec and export their artifacts.
+To initiate a manual run of the package, users may simply execute main.py using any Python-supported software or by utilizing the terminal. For terminal installation, navigate to the project directory and execute the command python main.py.
+
+The package offers two primary processes:
+
+build_data_objects(): This function is responsible for constructing all data objects necessary for both the models and the UI. These objects include enriched_events_data, matches_metadata, teams_metadata, players_metadata, players_metrics_df, and baselines.pickle.
+The enriched_events_data DataFrame applies to_metric_centered_coordinates on the data and adds information such as shot types. The matches_metadata DataFrame adds information such as season_name and competition_name for each match in the dataset. The teams_metadata DataFrame adds columns such as nation, stadium, and gender for each team in the dataset. The players_metadata DataFrame combines player metadata given in the dataset and enriches it with events_data information, including player_name, team_name, and position_name per player. Finally, the players_metrics_df DataFrame builds a collection of stats for players, including xG, xA, lifts for each shot type, and more. The baselines.pickle object builds a dictionary that maps baselines_dimension to a DataFrame that is identical to players_metrics_df but contains baselines names instead of players.
+
+build_language_models(): This function is responsible for building all models of Football2Vec, including Action2Vec and Player2Vec. It then exports the resulting artifacts for use by the package.
 
 ### Run configurations
 There are some very basic configurations for each run, available to modify directly on `main.py`:
