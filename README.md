@@ -1,11 +1,5 @@
 # Football Analytics
 
-<img alt="Football2Vec" src="https://pbs.twimg.com/profile_banners/57356687/1630479357">
-
-
-## Pre-Requisites
-### Anaconda environment
-
 ### Dataset
 The StatsBomb open dataset represents an invaluable resource for researchers seeking to explore the complexities of contemporary football. This freely available data offers a comprehensive overview of key performance indicators and enables users to engage in sophisticated data analysis to gain deeper insights into player and team performance. Interested parties are encouraged to visit the official GitHub repository for more information, where they can download the dataset and begin exploring its vast potential.
 
