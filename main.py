@@ -1,11 +1,11 @@
 """
-Created on September 5 2021
+Created on February 5 2023
 
 Main run file of football2vec. Covers building data objects and language models, using StatsBomb data.
 
 Data and pre-made artifacts for download are available via the README file
 
-@author: Ofir Magdaci (@Magdaci)
+@author: Abhishek Jaiswal
 
 """
 
