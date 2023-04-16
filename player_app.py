@@ -1,9 +1,9 @@
 """
-Created on September 5 2021
+Created on February 5 2023
 
 Streamlit app as UI for delivering skill analysis and Player2Vec representations.
 
-@author: Ofir Magdaci (@Magdaci)
+@author: Abhishek
 
 """
 
